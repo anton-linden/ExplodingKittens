@@ -14,6 +14,11 @@ public class Deck {
         deck.add(card);
     }
 
+    public void addCardAtIndex(Card card, int index) {
+        if (index > deck.size() || index < deck.size()) { index = 0; }
+        deck.add(index, card);
+    }
+
     public Boolean containsCard(Card card) {
         return deck.contains(card);
     }
