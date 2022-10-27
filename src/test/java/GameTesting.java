@@ -1,11 +1,36 @@
 import Deck.Deck;
 import Game.GameManager;
 import Player.Player;
+import Player.PlayerManager;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTesting {
+
+
+    @Test
+    void getNextPlayer() {
+        GameManager gameManager = new GameManager();
+        PlayerManager playerManager = new PlayerManager();
+
+        for(int i=0; i < 4; i++) {
+            playerManager.addPlayer(new Player(i+1, true, null, null, null)); //add a bot
+        }
+
+        gameManager.setPlayerManager(playerManager);
+
+        Player firstPlayer = playerManager.getPlayers().get(0);
+        gameManager.setCurrentPlayer(firstPlayer);
+
+        Player player = gameManager.getNextPlayer();
+        gameManager.setCurrentPlayer(player);
+
+        if (gameManager.getCurrentPlayer() == firstPlayer) { fail("Still the same player!!"); }
+
+        assertSame(player, gameManager.getCurrentPlayer());
+    }
+
 
     //Requirement 1
     @Test

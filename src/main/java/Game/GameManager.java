@@ -113,6 +113,7 @@ public class GameManager {
         int playersLeft = playerManager.getPlayers().size();
 
         do {
+
             for(Player p: playerManager.getPlayers()) {
                 if(p == currentPlayer)
                     p.sendMessage("It is your turn");
@@ -158,6 +159,7 @@ public class GameManager {
                             continue;
                         }
                         activateCardAndMoveToDiscardPile(currentPlayer, response);
+                        numberOfTurnsToTake += AMOUNT_OF_TURNS_EACH_ROUND;
                         break;
                     }
 
@@ -201,10 +203,13 @@ public class GameManager {
                     numberOfTurnsToTake = AMOUNT_OF_TURNS_EACH_ROUND; //We have served all of our turns, reset it for the next player
             }
 
-            do { //next player that is still in the game
+/*            do { //next player that is still in the game
                 int nextID=((currentPlayer.playerID+1) < playerManager.getPlayers().size()?(currentPlayer.playerID)+1:0);
                 currentPlayer = playerManager.getPlayers().get(nextID);
-            } while(currentPlayer.exploded && playersLeft>1);
+            } while(currentPlayer.exploded && playersLeft>1);*/
+
+            setCurrentPlayer(getNextPlayer());
+
         } while (playerManager.getPlayers().size() > 1);
 
         Player winner = currentPlayer;
@@ -216,6 +221,12 @@ public class GameManager {
             player.sendMessage("Player " + winner.playerID + " has won the game");
 
         System.exit(0);
+    }
+
+    public Player getNextPlayer() {
+        return ((playerManager.getPlayers().indexOf(getCurrentPlayer()) + 1) == playerManager.getPlayers().size())
+                ? playerManager.getPlayers().get(0) //Return first
+                : playerManager.getPlayers().get(playerManager.getPlayers().indexOf(getCurrentPlayer()) + 1);    //Return next element
     }
 
     /**
