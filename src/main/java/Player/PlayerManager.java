@@ -1,5 +1,7 @@
 package Player;
 
+import Deck.Deck;
+
 import java.util.ArrayList;
 
 public class PlayerManager {
@@ -51,5 +53,13 @@ public class PlayerManager {
     public void sendMessageToAllPlayersAndSpectators(String msg) {
         sendMessageToAllPlayers(msg);
         sendMessageToAllSpectators(msg);
+    }
+
+    public void printHand(Player player) {
+        player.sendMessage("Your hand: ");
+
+        for (int i = 0; i < player.getHand().getSize(); i++) {
+            player.sendMessage(player.getHand().getDeck().get(i).getName());
+        }
     }
 }

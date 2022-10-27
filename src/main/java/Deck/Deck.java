@@ -1,6 +1,7 @@
 package Deck;
 
 import Cards.Card;
+import Player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,6 +106,23 @@ public class Deck {
 
     public void clearAll() {
         deck = new ArrayList<Card>();
+    }
+
+    public ArrayList<Card> getCardsWithFrequency(int min_frequency, int max_frequency) {
+
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<String> checkedCards = new ArrayList<>();
+
+        for (Card card : getDeck()) {
+            if (!checkedCards.contains(card.getName())) {
+                checkedCards.add(card.getName());
+
+                if (getCardCountFromCardName(card.getName()) >= min_frequency && getCardCountFromCardName(card.getName()) < max_frequency)
+                    cards.add(card);
+            }
+        }
+
+        return cards;
     }
 
 }
