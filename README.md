@@ -9,3 +9,6 @@ Exploding Kittens are a card game that's quite popular. The game is played with 
 ## Settings
 
 [Java](https://dev.java/) [Maven](maven.apache.org) project running [JDK 18](https://www.oracle.com/java/technologies/javase/jdk18-archive-downloads.html). Testing is done using unit testing with [Junit 5.9.1](https://junit.org/junit5/docs/snapshot/release-notes/#release-notes-5.9.1).
+
+## Documentation
+Javadocumentation can be found under ExplodingKittens/src/main/resources/Documentation/
