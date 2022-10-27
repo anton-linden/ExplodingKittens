@@ -12,6 +12,6 @@ public class Attack extends CardEvent {
     public void execute(GameManager gameManager) {
         validateCard(gameManager, getName());
         gameManager.activateCardAndMoveToDiscardPile(gameManager.getCurrentPlayer(), getName());
-        gameManager.queueNextTurn(true);
+        gameManager.queueNextTurn(true, false);
     }
 }

@@ -17,7 +17,7 @@ public class Three extends CardEvent {
         removeCards(gameManager);
 
         attemptToGetCardFromTarget(gameManager);
-        gameManager.queueNextTurn(false);
+        gameManager.queueNextTurn(false, false);
     }
 
     private void attemptToGetCardFromTarget(GameManager gameManager) {

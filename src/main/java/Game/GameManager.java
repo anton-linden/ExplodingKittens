@@ -93,7 +93,7 @@ public class GameManager {
         getEventQueue().add(eventFactory.makeEvent("PlayerTurn"));
     }
 
-    public void queueNextTurn(boolean forceChangePlayer) {
+    public void queueNextTurn(boolean forceChangePlayer, boolean reduceTurns) {
 
         if (forceChangePlayer) {
             setCurrentPlayer(getNextPlayer());
@@ -101,7 +101,8 @@ public class GameManager {
             return;
         }
 
-        setNumberOfTurnsToTake(getNumberOfTurnsToTake()-1);
+        if (reduceTurns)
+            setNumberOfTurnsToTake(getNumberOfTurnsToTake()-1);
 
         if (getNumberOfTurnsToTake() > 0) {
             getEventQueue().add(eventFactory.makeEvent("PlayerTurn"));

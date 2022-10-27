@@ -12,6 +12,6 @@ public class Skip extends CardEvent {
     public void execute(GameManager gameManager) {
         validateCard(gameManager, getName());
         gameManager.activateCardAndMoveToDiscardPile(gameManager.getCurrentPlayer(), getName());
-        gameManager.queueNextTurn(false);
+        gameManager.queueNextTurn(false, true);
     }
 }

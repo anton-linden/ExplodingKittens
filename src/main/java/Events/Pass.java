@@ -15,6 +15,6 @@ public class Pass extends CardEvent {
         drawCard.drawEffect(gameManager);
         gameManager.getCurrentPlayer().getHand().addCard(drawCard);
         gameManager.getCurrentPlayer().sendMessage("You drew: " + drawCard.getName());
-        gameManager.queueNextTurn(false);
+        gameManager.queueNextTurn(false, true);
     }
 }

@@ -19,7 +19,7 @@ public class Two extends CardEvent {
 
         removeCards(gameManager);
         drawRandoAndMoveCard(gameManager);
-        gameManager.queueNextTurn(false);
+        gameManager.queueNextTurn(false, false);
     }
 
     private void drawRandoAndMoveCard(GameManager gameManager) {
