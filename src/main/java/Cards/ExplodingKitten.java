@@ -28,8 +28,8 @@ public class ExplodingKitten extends Card {
     private void cannotDefuse(GameManager gameManager) {
         gameManager.getDiscard().addCard(this);
         gameManager.getDiscard().addDeck(gameManager.getCurrentPlayer().getHand());
-        gameManager.getPlayerManager().sendMessageToAllPlayers("Player " + gameManager.getCurrentPlayer().playerID + " exploded");
         gameManager.getCurrentPlayer().exploded = true;
-        gameManager.getPlayerManager().removePlayer(gameManager.getCurrentPlayer());
+        gameManager.getPlayerManager().movePlayerToSpectators(gameManager.getCurrentPlayer());
+        gameManager.getPlayerManager().sendMessageToAllPlayersAndSpectators("Player " + gameManager.getCurrentPlayer().playerID + " exploded");
     }
 }
