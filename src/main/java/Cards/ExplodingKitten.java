@@ -30,5 +30,12 @@ public class ExplodingKitten extends Card {
         gameManager.getCurrentPlayer().exploded = true;
         gameManager.getPlayerManager().movePlayerToSpectators(gameManager.getCurrentPlayer());
         gameManager.getPlayerManager().sendMessageToAllPlayersAndSpectators("Player " + gameManager.getCurrentPlayer().playerID + " exploded");
+
+        if (isThereAWinner(gameManager))
+            gameManager.getEventQueue().add(gameManager.getEventFactory().makeEvent("AnnounceWinner"));
+    }
+
+    private boolean isThereAWinner(GameManager gameManager) {
+        return (gameManager.getPlayerManager().getPlayers().size() == 1);
     }
 }

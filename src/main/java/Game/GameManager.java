@@ -11,18 +11,16 @@ import Server.Server;
 import java.util.*;
 
 public class GameManager {
-
     private final int MIN_AMOUNT_OF_PLAYERS = 2;
     private final int MAX_AMOUNT_OF_PLAYERS = 5;
     private final int AMOUNT_OF_TURNS_EACH_ROUND = 1;   //The amount of base turns
+
 
     public Deck pile = new Deck();
     public Deck discard = new Deck();
     private PlayerManager playerManager = new PlayerManager();
     private Player currentPlayer = null;
-
     private Queue<Event> eventQueue = new LinkedList<>();
-
     private EventFactory eventFactory = new EventFactory();
     private CardFactory cardFactory = new CardFactory();
     public int numberOfTurnsToTake = AMOUNT_OF_TURNS_EACH_ROUND; //attacked?
@@ -236,7 +234,7 @@ public class GameManager {
         System.exit(0);
     }*/
 
-    public Player getWinner() throws Exception {
+/*    public Player getWinner() throws Exception {
         Player winner = null;
         int count = 0;
 
@@ -252,19 +250,7 @@ public class GameManager {
 
 
         return winner;
-    }
-
-    public void notifyAllPlayersAndSpectatorsOfWinner() {
-        String msg = "";
-
-        try {
-            msg = "Player " + getWinner().playerID + " has won the game";
-        } catch (Exception e) {
-            msg = "No winner was found";
-        }
-
-        playerManager.sendMessageToAllPlayersAndSpectators(msg);
-    }
+    }*/
 
     public Player getNextPlayer() {
         return ((playerManager.getPlayers().indexOf(getCurrentPlayer()) + 1) == playerManager.getPlayers().size())
@@ -292,47 +278,6 @@ public class GameManager {
         discard.addCard(card);
         player.getHand().removeCard(card);
     }
-
-/*    private void printTurn(Player player) {
-        player.sendMessage("\nYou have " + numberOfTurnsToTake + ((numberOfTurnsToTake>1)?" turns":" turn") + " to take");
-        printHand(player, player.getHand());
-        printOptions(player);
-    }
-
-    private void printOptions(Player out) {
-        String yourOptions = "You have the following options:\n";
-        ArrayList<String> stringArrayList = new ArrayList<>();
-
-        for(Card card : out.getHand().getDeck()) {
-            if (card.canBePlayed() && !stringArrayList.contains(card.getName())) {
-                stringArrayList.add(card.getName());
-            }
-        }
-
-        for(String str: stringArrayList) {
-            yourOptions += "\t" + str + "\n";
-        }
-
-        for (Card card : getCurrentPlayer().getHand().getCardsWithFrequency(2, 2)) {
-            yourOptions += "\tTwo " + card.getName() + " [target] (available targets: " + "otherPlayerIDs" + ") (Steal random card)\n";
-        }
-
-        for (Card card : getCurrentPlayer().getHand().getCardsWithFrequency(3, 9999)) {
-            yourOptions += "\tThree " + card.getName() + " [target] [Card Type] (available targets: " + "otherPlayerIDs" + ") (Name and pick a card)\n";
-        }
-
-        yourOptions += "\tPass\n";
-
-        out.sendMessage(yourOptions);
-    }*/
-
-/*    private void printHand(Player out, Deck hand) {
-        out.sendMessage("Your hand: ");
-
-        for (int i = 0; i < hand.getSize(); i++) {
-            out.sendMessage(hand.getDeck().get(i).getName());
-        }
-    }*/
 
     public Deck getPile() {
         return pile;
