@@ -6,6 +6,7 @@ import Player.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Deck {
 
@@ -125,4 +126,7 @@ public class Deck {
         return cards;
     }
 
+    public Card drawRandomCard() {
+        return drawCardAtIndex(new Random().nextInt(getDeck().size()));
+    }
 }

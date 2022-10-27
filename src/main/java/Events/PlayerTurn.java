@@ -69,6 +69,12 @@ public class PlayerTurn extends Event {
 
         Event e = gameManager.getEventFactory().makeEvent(args[0]);
 
+        if (args.length > 2)
+            e.setType(args[1]);
+
+        if(args.length == 3)
+            e.setTarget(gameManager.getPlayerManager().getPlayers().get(Integer.valueOf(args[2])));
+
         if (e != null) {
             gameManager.getEventQueue().add(e);
         } else {

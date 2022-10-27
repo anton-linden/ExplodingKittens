@@ -21,7 +21,7 @@ public class Player {
     public boolean exploded = false;
     public ObjectInputStream inFromClient;
     public ObjectOutputStream outToClient;
-    Scanner in = new Scanner(System.in);
+    Scanner in = null;
 
     private Deck hand = null;
 
@@ -69,7 +69,7 @@ public class Player {
                         return br.readLine();
                 } else {
                     in = new Scanner(System.in);
-                    word=in.nextLine();
+                    word = in.nextLine();
                 }
             } catch(Exception e){System.out.println(e.getMessage());}
         return word;
