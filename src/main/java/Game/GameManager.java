@@ -97,7 +97,7 @@ public class GameManager {
     public void addCards() {
         CardFactory cardFactory = new CardFactory();
 
-        for(int i=0; i<4; i++) {pile.addCard(cardFactory.makeCard("Attack"));}
+        for(int i=0; i<40; i++) {pile.addCard(cardFactory.makeCard("Attack"));}
         for(int i=0; i<4; i++) {pile.addCard(cardFactory.makeCard("Favor")); }
         for(int i=0; i<5; i++) {pile.addCard(cardFactory.makeCard("Nope"));}
         for(int i=0; i<4; i++) {pile.addCard(cardFactory.makeCard("Shuffle"));}
@@ -160,7 +160,12 @@ public class GameManager {
                             continue;
                         }
                         activateCardAndMoveToDiscardPile(currentPlayer, response);
+
+                        if (numberOfTurnsToTake > 1)
+                            numberOfTurnsToTake += 1;
+
                         numberOfTurnsToTake += AMOUNT_OF_TURNS_EACH_ROUND;
+
                         break;
                     }
 
