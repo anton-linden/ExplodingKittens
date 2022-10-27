@@ -1,9 +1,11 @@
 package Events;
-
-import Cards.Card;
-
 public class EventFactory {
 
+    /**
+     * Factory design pattern to create a new event from a given class in the Events packet.
+     * @param name class name in the Events packet to create.
+     * @return the new Event.
+     */
     public Event makeEvent(String name) {
         if (name.equals("Event")) { return null; }  //Guard statement to stop from accidentally instantiating the abstract class.
 

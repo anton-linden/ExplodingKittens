@@ -9,6 +9,10 @@ public class Three extends CardEvent {
         setName("Three");
     }
 
+    /**
+     * If the current user has the correct amount of cards the cards gets removed from the player's hand. Then we attempt to take a card from the chosen player.
+     * @param gameManager the GameManager of the current game.
+     */
     @Override
     public void execute(GameManager gameManager) {
         if (!isValidateCardFrequency(gameManager))
@@ -20,6 +24,10 @@ public class Three extends CardEvent {
         gameManager.queueNextTurn(false, false);
     }
 
+    /**
+     * Attempts to get a card from the target. The player picks a card from the target.
+     * @param gameManager the GameManager of the current game.
+     */
     private void attemptToGetCardFromTarget(GameManager gameManager) {
         gameManager.getCurrentPlayer().sendMessage("Type a card to attempt to steal from player " + getTarget().playerID);
         Card card = null;
@@ -37,10 +45,19 @@ public class Three extends CardEvent {
         gameManager.getCurrentPlayer().sendMessage("You received a " + card.getName() + " card from player " + getTarget().playerID);
     }
 
+    /**
+     * Validate that the player has the correct amount of cards.
+     * @param gameManager the GameManager of the current game.
+     * @return true/false
+     */
     private boolean isValidateCardFrequency(GameManager gameManager) {
         return (gameManager.getCurrentPlayer().getHand().getCardCountFromCardName(getType()) >= 3);
     }
 
+    /**
+     * Remove the cards on hand if the correct amount existed.
+     * @param gameManager the GameManager of the current game.
+     */
     private void removeCards(GameManager gameManager) {
         for (int i = 0; i < 3; i++) {
             gameManager.getCurrentPlayer().getHand().removeCard(gameManager.getCurrentPlayer().getHand().getCardFromCardName(getType()));

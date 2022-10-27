@@ -9,6 +9,10 @@ public abstract class Event {
     private String type = name;
     private Player target = null;
 
+    /**
+     * Executes instructions specific to the created event.
+     * @param gameManager the GameManager of the current game.
+     */
     public void execute(GameManager gameManager) {}
 
     public String getName() {
