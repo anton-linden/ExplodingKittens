@@ -78,7 +78,6 @@ public class GameManager {
         }
     }
 
-
     /**
      * Gives all players the right amount of starting cards each drawn for the pile and gives defuse cards.
      * @param playerArrayList the players that shall get the cards
