@@ -20,8 +20,7 @@ public class ExplodingKitten extends Card {
 
         gameManager.getCurrentPlayer().getHand().removeCard(drawCard);
         gameManager.getCurrentPlayer().sendMessage("You defused the kitten. Where in the deck do you wish to place the ExplodingKitten? [0.." + (gameManager.getPile().getSize()-1) + "]");
-        //TODO: Add to the pile at position chosen by player.
-        gameManager.getPile().addCard(this);
+        gameManager.getPile().addCardAtIndex(this, Integer.valueOf(gameManager.getCurrentPlayer().readMessage(false)));
         gameManager.getPlayerManager().sendMessageToAllPlayers("Player " + gameManager.getCurrentPlayer().playerID + " successfully defused a kitten");
     }
 

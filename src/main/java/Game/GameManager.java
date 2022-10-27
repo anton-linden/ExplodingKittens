@@ -59,7 +59,7 @@ public class GameManager {
             pile.shuffle();
 
             giveStartingCards(playerManager.getPlayers());
-            insertCard("ExplodingKitten", playerManager.getPlayers().size()+20, pile);  //TODO - Reset
+            insertCard("ExplodingKitten", playerManager.getPlayers().size()-1, pile);
 
             pile.shuffle();
 
