@@ -7,6 +7,7 @@ import Player.Player;
 import Player.PlayerManager;
 import Server.Server;
 
+import java.lang.management.PlatformLoggingMXBean;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -212,15 +213,39 @@ public class GameManager {
 
         } while (playerManager.getPlayers().size() > 1);
 
-        Player winner = currentPlayer;
-
-        for(Player notify: getPlayerManager().getPlayers())
-            winner = (!notify.exploded?notify:winner);
-
-        for(Player player: getPlayerManager().getPlayers())
-            player.sendMessage("Player " + winner.playerID + " has won the game");
+        notifyAllPlayersAndSpectatorsOfWinner();
 
         System.exit(0);
+    }
+
+    public Player getWinner() throws Exception {
+        Player winner = null;
+        int count = 0;
+
+        for(Player player: getPlayerManager().getPlayers()) {
+            if (!player.exploded) {
+                count++;
+                winner = player;
+            }
+        }
+
+        if (count > 1)
+            throw new Exception("Too many winners! There should only be one!");
+
+
+        return winner;
+    }
+
+    public void notifyAllPlayersAndSpectatorsOfWinner() {
+        String msg = "";
+
+        try {
+            msg = "Player " + getWinner().playerID + " has won the game";
+        } catch (Exception e) {
+            msg = "No winner was found";
+        }
+
+        playerManager.sendMessageToAllPlayersAndSpectators(msg);
     }
 
     public Player getNextPlayer() {
