@@ -1,7 +1,6 @@
 package Deck;
 
 import Cards.Card;
-import Player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +16,7 @@ public class Deck {
     }
 
     public void addCardAtIndex(Card card, int index) {
-        if (index > deck.size() || index < deck.size()) { index = 0; }
+        if (index > deck.size() || index < 0) { index = 0; }
         deck.add(index, card);
     }
 

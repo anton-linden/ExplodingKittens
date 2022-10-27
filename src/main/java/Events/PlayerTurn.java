@@ -1,7 +1,6 @@
 package Events;
 
 import Cards.Card;
-import Deck.Deck;
 import Game.GameManager;
 import Player.Player;
 

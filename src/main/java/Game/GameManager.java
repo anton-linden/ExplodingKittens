@@ -8,8 +8,6 @@ import Events.EventFactory;
 import Player.Player;
 import Player.PlayerManager;
 import Server.Server;
-
-import java.lang.management.PlatformLoggingMXBean;
 import java.util.*;
 
 public class GameManager {
@@ -237,7 +235,7 @@ public class GameManager {
         notifyAllPlayersAndSpectatorsOfWinner();
         System.exit(0);
     }*/
-    
+
     public Player getWinner() throws Exception {
         Player winner = null;
         int count = 0;
