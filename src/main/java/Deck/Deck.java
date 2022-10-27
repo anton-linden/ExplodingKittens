@@ -9,20 +9,7 @@ import java.util.Random;
 
 public class Deck {
 
-    public ArrayList<Card> deck = new ArrayList<>();
-
-    public void addCard(Card card) {
-        deck.add(card);
-    }
-
-    public void addCardAtIndex(Card card, int index) {
-        if (index > deck.size() || index < 0) { index = 0; }
-        deck.add(index, card);
-    }
-
-    public Boolean containsCard(Card card) {
-        return deck.contains(card);
-    }
+    private ArrayList<Card> deck = new ArrayList<>();
 
     /**
      * Get a card from its card name.
@@ -50,30 +37,36 @@ public class Deck {
         return count;
     }
 
-    public Boolean hasCardWithCardName(String cardName) {
+    /**
+     * Gets a list of cards that has a specific frequency.
+     * @param min_frequency minimum occurrence
+     * @param max_frequency maximum occurrence
+     * @return A list of card objects.
+     */
+    public ArrayList<Card> getCardsWithFrequency(int min_frequency, int max_frequency) {
+        ArrayList<Card> cards = new ArrayList<>();
+        ArrayList<String> checkedCards = new ArrayList<>();
+
+        for (Card card : getDeck()) {
+            if (!checkedCards.contains(card.getName())) {
+                checkedCards.add(card.getName());
+
+                if (getCardCountFromCardName(card.getName()) >= min_frequency && getCardCountFromCardName(card.getName()) < max_frequency)
+                    cards.add(card);
+            }
+        }
+        return cards;
+    }
+
+    /**
+     * Checks if the given card name exists in the deck.
+     * @param cardName name of card to check for.
+     * @return true/false if it exists or not.
+     */
+    public boolean hasCardWithCardName(String cardName) {
         for (Card card : deck) {
             if (card.getName().equals(cardName)) { return true; }
         } return false;
-    }
-
-    public Card drawTopCard() {
-        return drawCardAtIndex(0);
-    }
-    public Card drawCardAtIndex(int index) {
-        if (deck.size() < 1) { return null; }
-        return deck.remove(index);
-    }
-
-    public void removeCard(Card card) {
-        deck.remove(card);
-    }
-
-    public void shuffle() {
-        Collections.shuffle(deck);
-    }
-
-    public int getSize() {
-        return deck.size();
     }
 
     /**
@@ -89,10 +82,6 @@ public class Deck {
         });
     }
 
-    public ArrayList<Card> getDeck() {
-        return deck;
-    }
-
     /**
      * Adds all cards in one deck to another deck.
      * @param _deck is a Deck to be added into the deck.
@@ -104,25 +93,56 @@ public class Deck {
         }
     }
 
-    public void clearAll() {
-        deck = new ArrayList<Card>();
+    /**
+     * Draws the card at a specific index. (Drawing a card will remove it from deck)
+     * @param index specific index of where to draw the card from
+     * @return the drawn card
+     */
+    public Card drawCardAtIndex(int index) {
+        if (deck.size() < 1) { return null; }
+        return deck.remove(index);
     }
 
-    public ArrayList<Card> getCardsWithFrequency(int min_frequency, int max_frequency) {
+    /**
+     * Adds a specific card object at a specific index.
+     * @param card object of a card instance.
+     * @param index specific index to insert the card at. If too small or too big, it gets inserted to the top of the deck.
+     */
+    public void addCardAtIndex(Card card, int index) {
+        if (index > deck.size() || index < 0) { index = 0; }
+        deck.add(index, card);
+    }
 
-        ArrayList<Card> cards = new ArrayList<>();
-        ArrayList<String> checkedCards = new ArrayList<>();
+    public ArrayList<Card> getDeck() {
+        return deck;
+    }
 
-        for (Card card : getDeck()) {
-            if (!checkedCards.contains(card.getName())) {
-                checkedCards.add(card.getName());
+    public void addCard(Card card) {
+        deck.add(card);
+    }
 
-                if (getCardCountFromCardName(card.getName()) >= min_frequency && getCardCountFromCardName(card.getName()) < max_frequency)
-                    cards.add(card);
-            }
-        }
+    public Boolean containsCard(Card card) {
+        return deck.contains(card);
+    }
 
-        return cards;
+    public void removeCard(Card card) {
+        deck.remove(card);
+    }
+
+    public Card drawTopCard() {
+        return drawCardAtIndex(0);
+    }
+
+    public void shuffle() {
+        Collections.shuffle(deck);
+    }
+
+    public int getSize() {
+        return deck.size();
+    }
+
+    public void clearAll() {
+        deck = new ArrayList<Card>();
     }
 
     public Card drawRandomCard() {
