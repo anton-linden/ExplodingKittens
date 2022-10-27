@@ -9,7 +9,6 @@ public class CardFactory {
      */
     public Card makeCard(String name) {
         if (name.equals("Card")) { return null; }  //Guard statement to stop from accidentally instantiating the abstract class.
-
         Card card = null;
 
         try {
@@ -19,7 +18,6 @@ public class CardFactory {
         } catch (Exception e) {
             System.out.println("Exception occurred: " + e);
         }
-
         return card;
     }
 }

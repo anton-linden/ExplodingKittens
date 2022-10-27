@@ -9,8 +9,12 @@ public class Shuffle extends Card {
         setName("Shuffle");
     }
 
+    /**
+     * When played, shuffle the games pile.
+     * @param gameManager the current game's GameManger.
+     */
     @Override
-    public void playCard(GameManager gamemanager) {
-        gamemanager.getPile().shuffle();
+    public void playCard(GameManager gameManager) {
+        gameManager.getPile().shuffle();
     }
 }

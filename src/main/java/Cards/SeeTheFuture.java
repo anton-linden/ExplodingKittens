@@ -11,12 +11,12 @@ public class SeeTheFuture extends Card {
     }
 
     @Override
-    public void playCard(GameManager gamemanager) {
-        gamemanager.getCurrentPlayer().sendMessage(
+    public void playCard(GameManager gameManager) {
+        gameManager.getCurrentPlayer().sendMessage(
                 "The top 3 cards are: "
-                        + gamemanager.getPile().getDeck().get(0).getName() + " "
-                        + gamemanager.getPile().getDeck().get(1).getName() + " "
-                        + gamemanager.getPile().getDeck().get(2).getName()
+                        + gameManager.getPile().getDeck().get(0).getName() + " "
+                        + gameManager.getPile().getDeck().get(1).getName() + " "
+                        + gameManager.getPile().getDeck().get(2).getName()
         );
     }
 }

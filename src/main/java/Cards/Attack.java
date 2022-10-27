@@ -10,9 +10,9 @@ public class Attack extends Card {
     }
 
     @Override
-    public void playCard(GameManager gamemanager) {
-        gamemanager.getCurrentPlayer().sendMessage(getName() + " was played");
-        increaseTurns(gamemanager);
+    public void playCard(GameManager gameManager) {
+        gameManager.getCurrentPlayer().sendMessage(getName() + " was played");
+        increaseTurns(gameManager);
     }
 
     private void increaseTurns(GameManager gameManager) {
