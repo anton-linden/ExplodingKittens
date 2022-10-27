@@ -4,7 +4,6 @@ import Game.GameManager;
 import Player.Player;
 
 public abstract class Card {
-
     private String name = "Name missing";   //Initialize to something weird so the user knows an error has occurred.
     private boolean canBePlayed = false;
 

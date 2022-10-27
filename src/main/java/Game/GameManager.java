@@ -15,15 +15,14 @@ public class GameManager {
     private final int MAX_AMOUNT_OF_PLAYERS = 5;
     private final int AMOUNT_OF_TURNS_EACH_ROUND = 1;   //The amount of base turns
 
-
-    public Deck pile = new Deck();
-    public Deck discard = new Deck();
+    private Deck pile = new Deck();
+    private Deck discard = new Deck();
     private PlayerManager playerManager = new PlayerManager();
     private Player currentPlayer = null;
     private Queue<Event> eventQueue = new LinkedList<>();
     private EventFactory eventFactory = new EventFactory();
     private CardFactory cardFactory = new CardFactory();
-    public int numberOfTurnsToTake = AMOUNT_OF_TURNS_EACH_ROUND; //attacked?
+    private int numberOfTurnsToTake = AMOUNT_OF_TURNS_EACH_ROUND;
 
     /**
      * Validate an amount of players that the game shall be initiated with. Min 2 players, max 5 players.
@@ -69,6 +68,9 @@ public class GameManager {
         }
     }
 
+    /**
+     * Runs the game. Takes a new event from the event queue that is a FIFO-queue and then executes it's instructions.
+     */
     public void game() {
         while(true) {
             if (getEventQueue().size() > 0)
@@ -77,6 +79,10 @@ public class GameManager {
     }
 
 
+    /**
+     * Gives all players the right amount of starting cards each drawn for the pile and gives defuse cards.
+     * @param playerArrayList the players that shall get the cards
+     */
     public void giveStartingCards(ArrayList<Player> playerArrayList) {
         for(Player player : playerArrayList) {
             player.getHand().addCard(getCardFactory().makeCard("Defuse"));
@@ -85,7 +91,7 @@ public class GameManager {
     }
 
     /**
-     * Sets a random starting player
+     * Sets a random starting player & and queues the first event. (Starting the game)
      */
     private void setStartPlayer() {
         Random rnd = new Random();
@@ -93,6 +99,11 @@ public class GameManager {
         getEventQueue().add(eventFactory.makeEvent("PlayerTurn"));
     }
 
+    /**
+     * Queues the next turn.
+     * @param forceChangePlayer if a event want's to force the next player do play next, this variable will force a current player variable change.
+     * @param reduceTurns determines if the amount of turns shall decrease or stay the same.
+     */
     public void queueNextTurn(boolean forceChangePlayer, boolean reduceTurns) {
 
         if (forceChangePlayer) {
@@ -115,7 +126,7 @@ public class GameManager {
     }
 
     /**
-     * Adds all cards to the main deck.
+     * Adds all cards in the basic game mode to the main deck called pile.
      */
     public void addCards() {
         for(int i=0; i<4; i++) {pile.addCard(getCardFactory().makeCard("Attack"));}
@@ -131,128 +142,10 @@ public class GameManager {
         for(int i=0; i<4; i++) {pile.addCard(getCardFactory().makeCard("OverweightBikiniCat"));}
     }
 
-    public Event getNextEvent() {
-        return getEventQueue().remove();
-    }
-
-    public Queue<Event> getEventQueue() {
-        return eventQueue;
-    }
-
-    /*public void game() {
-        int playersLeft = playerManager.getPlayers().size();
-
-        do {
-
-            for(Player p: playerManager.getPlayers()) {
-                if(p == currentPlayer)
-                    p.sendMessage("It is your turn");
-                else
-                    p.sendMessage("It is now the turn of player " + currentPlayer.playerID);
-            }
-
-            for(int i=0; i<numberOfTurnsToTake; i++) {
-
-                printTurn(currentPlayer);
-                String response = currentPlayer.readMessage(false);
-
-                if (response.equals("Pass")) { //Draw a card and end turn
-                    Card drawCard = pile.drawTopCard();
-                    drawCard.drawEffect(this);
-                    currentPlayer.getHand().addCard(drawCard);
-                    currentPlayer.sendMessage("You drew: " + drawCard.getName());
-                }
-
-                if (response.contains("Two")) {
-                    String[] args = response.split(" ");
-                    if (!(currentPlayer.getHand().getCardCountFromCardName(args[1]) >= 2)) {
-                        currentPlayer.sendMessage("You don't have enough of that card on your hand!");
-                        continue;
-                    }
-
-                    activateCardAndMoveToDiscardPile(currentPlayer, args[1]);
-                    activateCardAndMoveToDiscardPile(currentPlayer, args[1]);
-                }
-
-                if (response.contains("Three")) {
-                    if (!(currentPlayer.getHand().getCardCountFromCardName(response) >= 3)) {
-                        currentPlayer.sendMessage("You don't have enough of that card on your hand!");
-                        continue;
-                    }
-                    activateCardAndMoveToDiscardPile(currentPlayer, response);
-                }
-
-                if (response.contains("Attack")) {
-                    //Call factory
-                    Event event = eventFactory.makeEvent("AttackPlayer");
-                    event.execute(this);
-                }
-
-                if (response.contains("Favor")) {
-                    if (!currentPlayer.getHand().hasCardWithCardName(response)) {
-                        currentPlayer.sendMessage("You don't have that card on your hand!");
-                        continue;
-                    }
-                    activateCardAndMoveToDiscardPile(currentPlayer, response);
-                }
-
-                if (response.contains("Shuffle")) {
-                    if (!currentPlayer.getHand().hasCardWithCardName(response)) {
-                        currentPlayer.sendMessage("You don't have that card on your hand!");
-                        continue;
-                    }
-                    activateCardAndMoveToDiscardPile(currentPlayer, response);
-                    i++;
-                }
-
-                if (response.contains("Skip")) {
-                    if (!currentPlayer.getHand().hasCardWithCardName(response)) {
-                        currentPlayer.sendMessage("You don't have that card on your hand!");
-                        continue;
-                    }
-                    activateCardAndMoveToDiscardPile(currentPlayer, response);
-                    i++;
-                }
-
-                if (response.contains("SeeTheFuture")) {
-                    if (!currentPlayer.getHand().hasCardWithCardName(response)) {
-                        currentPlayer.sendMessage("You don't have that card on your hand!");
-                        continue;
-                    }
-                    activateCardAndMoveToDiscardPile(currentPlayer, response);
-                    i++;
-                }
-
-                if(i >= (numberOfTurnsToTake-1))
-                    numberOfTurnsToTake = AMOUNT_OF_TURNS_EACH_ROUND; //We have served all of our turns, reset it for the next player
-            }
-
-            setCurrentPlayer(getNextPlayer());
-
-        } while (playerManager.getPlayers().size() > 1);
-
-        notifyAllPlayersAndSpectatorsOfWinner();
-        System.exit(0);
-    }*/
-
-/*    public Player getWinner() throws Exception {
-        Player winner = null;
-        int count = 0;
-
-        for(Player player: getPlayerManager().getPlayers()) {
-            if (!player.exploded) {
-                count++;
-                winner = player;
-            }
-        }
-
-        if (count > 1)
-            throw new Exception("Too many winners! There should only be one!");
-
-
-        return winner;
-    }*/
-
+    /**
+     * Gets the next player that's next in line to play.
+     * @return the next player
+     */
     public Player getNextPlayer() {
         return ((playerManager.getPlayers().indexOf(getCurrentPlayer()) + 1) == playerManager.getPlayers().size())
                 ? playerManager.getPlayers().get(0) //Return first
@@ -266,6 +159,10 @@ public class GameManager {
      */
     public void activateCardAndMoveToDiscardPile(Player player, String cardName) {
         Card card = player.getHand().getCardFromCardName(cardName);
+
+        if (card == null)
+            return;
+
         card.playCard(this);
         removeCardFromPlayerAddToDiscardPile(player, card);
     }
@@ -280,20 +177,22 @@ public class GameManager {
         player.getHand().removeCard(card);
     }
 
+    /**
+     * Creates and inserts a card from only a name into a deck using the card factory.
+     * @param cardName name of the card to insert
+     * @param amount amount of cards of the given type to add
+     * @param deck the deck that shall have the new cards
+     */
+    public void insertCard(String cardName, int amount, Deck deck) {
+        for(int i=0; i < amount; i++) { deck.addCard(getCardFactory().makeCard(cardName)); }
+    }
+
     public Deck getPile() {
         return pile;
     }
 
-    public void setPile(Deck pile) {
-        this.pile = pile;
-    }
-
     public Deck getDiscard() {
         return discard;
-    }
-
-    public void setDiscard(Deck discard) {
-        this.discard = discard;
     }
 
     public PlayerManager getPlayerManager() {
@@ -316,10 +215,6 @@ public class GameManager {
         return AMOUNT_OF_TURNS_EACH_ROUND;
     }
 
-    public void insertCard(String cardName, int amount, Deck deck) {
-        for(int i=0; i < amount; i++) { deck.addCard(getCardFactory().makeCard(cardName)); }
-    }
-
     public EventFactory getEventFactory() {
         return eventFactory;
     }
@@ -334,5 +229,13 @@ public class GameManager {
 
     public CardFactory getCardFactory() {
         return cardFactory;
+    }
+
+    public Event getNextEvent() {
+        return getEventQueue().remove();
+    }
+
+    public Queue<Event> getEventQueue() {
+        return eventQueue;
     }
 }

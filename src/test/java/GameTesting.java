@@ -134,7 +134,7 @@ public class GameTesting {
                 gameManager.getPlayerManager().addPlayer(new Player(i, false, null, null, null));
             }
 
-            gameManager.insertCard("ExplodingKitten", gameManager.getPlayerManager().getPlayers().size()-1, gameManager.pile);
+            gameManager.insertCard("ExplodingKitten", gameManager.getPlayerManager().getPlayers().size()-1, gameManager.getPile());
             gameManager.giveStartingCards(gameManager.getPlayerManager().getPlayers());
 
             for (Player player : gameManager.getPlayerManager().getPlayers()) {
@@ -158,7 +158,7 @@ public class GameTesting {
                 gameManager.getPlayerManager().addPlayer(new Player(i, false, null, null, null));
             }
 
-            gameManager.insertCard("ExplodingKitten", gameManager.getPlayerManager().getPlayers().size()-1, gameManager.pile);
+            gameManager.insertCard("ExplodingKitten", gameManager.getPlayerManager().getPlayers().size()-1, gameManager.getPile());
 
             if (gameManager.getPile().getCardCountFromCardName("ExplodingKitten") != gameManager.getPlayerManager().getPlayers().size() - 1) {
                 flag = true;
